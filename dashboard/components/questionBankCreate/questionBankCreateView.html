@@ -1,0 +1,217 @@
+<!-- https://vitalets.github.io/angular-xeditable/#editable-form -->
+
+<form data-toggle="validator" role="form">
+
+  <div class="panel-group" ng-repeat="row in questionSetList">
+
+    <div id="{{row.questionNumber}}_parent_panel" name="{{row.questionNumber}}_parent_panel" class="panel panel-primary">
+      <div id="{{row.questionNumber}}_parent_heading" name="{{row.questionNumber}}_parent_heading" class="panel-heading">{{$index + 1}}. {{row.questionType === 'single' ? 'Single Answer Question' : ''}}{{row.questionType === 'multi' ? 'Multiple Answer Question' : ''}}{{row.questionType === 'match-term' ? 'Match Terms Question' : ''}}</div>
+      <div class="panel-body" ng-if="row.questionType=='single'">
+
+        <div class="form-group">
+          <label for="{{row.questionNumber}}_question_single_text_input" class="col-2 col-form-label">Question</label>
+          <input class="form-control" type="text" value="{{row.question}}"
+                 id="{{row.questionNumber}}_question_single_text_input"
+                 ng-change="onSingleQuestionTextFieldChange({{row.questionNumber}})"
+                 ng-model="row.question">
+        </div>
+        <div class="form-group">
+          <label for="{{row.questionNumber}}_explanation_single_text_input" class="col-2 col-form-label">Explanation</label>
+            <input class="form-control" type="text" value="{{row.explanation}}"
+                   id="{{row.questionNumber}}_explanation_single_text_input"
+                   ng-change="onSingleExplanationTextFieldChange({{row.questionNumber}})"
+                   ng-model="row.explanation">
+        </div>
+
+        <div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+          <div class="radio">
+            <button type="button" class="btn btn-default btn-sm" id="{{row.questionNumber}}_{{arrayOfSelection.key}}_deletenewselection_single_text_button" ng-click="deleteSingleAnswerSelection($event)">
+              <span class="glyphicon glyphicon-minus"></span> Remove this annswer
+            </button>
+            <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label" name="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label"><input type="radio" name="{{row.questionNumber}}" id="{{row.questionNumber}}" value="{{arrayOfSelection.key}}" ng-click="quizSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+          </div>
+        </div>
+
+        <br/>
+        <label class="col-2 col-form-label">Add new answer selection</label>
+        <br/>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Add new answer here." id="{{row.questionNumber}}_addnewselection_single_text_input">
+          <br/>
+          <button type="button" class="btn btn-default btn-sm" ng-click="addSingleAnswerSelection($event)" id="{{row.questionNumber}}_addnewselection_single_text_button">
+            <span class="glyphicon glyphicon-plus"></span> Add new answer
+          </button>
+        </div>
+        <br/>
+        <label class="col-2 col-form-label">Remove this question.</label>
+        <br/>
+        <button type="button" class="btn btn-default btn-sm" ng-click="deleteOneQuestion($event)" id="{{row.questionNumber}}_delete_single_question_button">
+          <span class="glyphicon glyphicon-remove"></span> Remove this question
+        </button>
+
+
+
+      </div>
+      <div class="panel-body" ng-if="row.questionType=='multi'">
+
+
+        <div class="form-group">
+          <label for="{{row.questionNumber}}_question_multi_text_input" class="col-2 col-form-label">Question</label>
+          <input class="form-control" type="text" value="{{row.question}}"
+                 id="{{row.questionNumber}}_question_multi_text_input"
+                 ng-change="onMultiQuestionTextFieldChange({{row.questionNumber}})"
+                 ng-model="row.question">
+        </div>
+        <div class="form-group">
+          <label for="{{row.questionNumber}}_explanation_multi_text_input" class="col-2 col-form-label">Explanation</label>
+          <input class="form-control" type="text" value="{{row.explanation}}"
+                 id="{{row.questionNumber}}_explanation_multi_text_input"
+                 ng-change="onMultiExplanationTextFieldChange({{row.questionNumber}})"
+                 ng-model="row.explanation">
+        </div>
+
+        <div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+          <div class="checkbox">
+            <button type="button" class="btn btn-default btn-sm" id="{{row.questionNumber}}_{{arrayOfSelection.key}}_deletenewselection_multi_text_button" ng-click="deleteMultiAnswerSelection($event)">
+              <span class="glyphicon glyphicon-minus"></span> Remove this annswer
+            </button>
+            <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label" name="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label">
+              <input type="checkbox" name="{{row.questionNumber}}_{{arrayOfSelection.key}}" id="{{row.questionNumber}}_{{arrayOfSelection.key}}" value="{{arrayOfSelection.key}}" ng-click="quizSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+          </div>
+        </div>
+
+        <br/>
+        <label class="col-2 col-form-label">Add new answer selection</label>
+        <br/>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Add new answer here." id="{{row.questionNumber}}_addnewselection_multi_text_input">
+          <br/>
+          <button type="button" class="btn btn-default btn-sm" ng-click="addMultiAnswerSelection($event)" id="{{row.questionNumber}}_addnewselection_multi_text_input_button">
+            <span class="glyphicon glyphicon-plus"></span> Add new answer
+          </button>
+        </div>
+
+        <br/>
+        <label class="col-2 col-form-label">Remove this question.</label>
+        <br/>
+        <button type="button" class="btn btn-default btn-sm" ng-click="deleteOneQuestion($event)" id="{{row.questionNumber}}_delete_multi_question_button">
+          <span class="glyphicon glyphicon-remove"></span> Remove this question
+        </button>
+      </div>
+      <div class="panel-body" ng-if="row.questionType=='match-term'">
+
+        <div class="form-group">
+          <label for="{{row.questionNumber}}_question_match_term_text_input" class="col-2 col-form-label">Question</label>
+          <input class="form-control" type="text" value="{{row.question}}"
+                 id="{{row.questionNumber}}_question_match_term_text_input"
+                 ng-change="onMatchTermQuestionTextFieldChange({{row.questionNumber}})"
+                 ng-model="row.question">
+        </div>
+        <div class="form-group">
+          <label for="{{row.questionNumber}}_explanation_match_term_text_input" class="col-2 col-form-label">Explanation</label>
+          <input class="form-control" type="text" value="{{row.explanation}}"
+                 id="{{row.questionNumber}}_explanation_match_term_text_input"
+                 ng-change="onMatchTermExplanationTextFieldChange({{row.questionNumber}})"
+                 ng-model="row.explanation">
+        </div>
+
+        <br/>
+        <label class="col-2 col-form-label">Select the corresponding answer from the dropdown.</label>
+        <br/><br/>
+        <div ng-repeat="arrayOfQuestionsMap in row.arrayOfQuestionsMap track by $index">
+
+          <div class="form-group">
+            <button type="button" class="btn btn-default btn-sm" id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_deleteselection_match_term_text_button" ng-click="deleteMatchTermItemToMatchSelection($event)">
+              <span class="glyphicon glyphicon-minus"></span> Remove this match
+            </button>&nbsp;&nbsp;
+            <label id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label" name="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label" for="{{arrayOfQuestionsMap.key}}">{{arrayOfQuestionsMap.value}}</label>
+
+            <select class="form-control" ng-options="arrayOfAnswerMap.value for arrayOfAnswerMap in row.arrayOfAnswerMap track by arrayOfAnswerMap.key "  id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}" name="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}" ng-change="quizSubmitAnswerMatchTermClick('{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}')" ng-model="userselected" >
+
+              <option value=""> - Select - </option>
+
+
+            </select>
+
+
+
+          </div>
+
+        </div>
+
+        <br/>
+        <label class="col-2 col-form-label">Add new term to be matched.</label>
+        <br/>
+
+
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Add item to match." id="{{row.questionNumber}}_item_to_match_input_text">
+          <br/>
+          <button type="button" class="btn btn-default btn-sm" ng-click="addMatchTermItemToMatchSelection($event)" id="{{row.questionNumber}}_item_to_match_input_button">
+            <span class="glyphicon glyphicon-plus"></span> Add item to match
+          </button>
+        </div>
+
+
+        <br/>
+        <label class="col-2 col-form-label">Add or remove selection items.</label>
+        <br/>
+        <div ng-repeat="arrayOfAnswerMapItem in row.arrayOfAnswerMap">
+            <button type="button" class="btn btn-default btn-sm" id="{{row.questionNumber}}_{{arrayOfAnswerMapItem.key}}_deleteselection_items_match_term_text_button" ng-click="deleteMatchTermAnswerItemSelection($event)">
+              <span class="glyphicon glyphicon-minus"></span> Remove this item
+            </button>
+            <label id="{{row.questionNumber}}_{{arrayOfAnswerMapItem.key}}_match_label" name="{{row.questionNumber}}_{{arrayOfAnswerMapItem.key}}_match_label">{{arrayOfAnswerMapItem.value}}</label>
+
+        </div>
+        <br/>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Add selection item." value="" id="{{row.questionNumber}}_item_selection_input_text">
+          <br/>
+          <button type="button" class="btn btn-default btn-sm" ng-click="addMatchTermItemSelection($event)" id="{{row.questionNumber}}_item_selection_input_button">
+            <span class="glyphicon glyphicon-plus"></span> Add selection item.
+          </button>
+        </div>
+
+        <br/>
+        <label class="col-2 col-form-label">Remove this question.</label>
+        <br/>
+        <button type="button" class="btn btn-default btn-sm" ng-click="deleteOneQuestion($event)" id="{{row.questionNumber}}_delete_match_term_question_button">
+          <span class="glyphicon glyphicon-remove"></span> Remove this question
+        </button>
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <br/>
+
+
+  <button type="button" class="btn btn-info" ng-click="addSingleAnswerQuestion();">Add Single Answer Question</button>
+
+  <button type="button" class="btn btn-success" ng-click="addMultiAnswerQuestion();">Add Multiple Answer Question</button>
+
+  <button type="button" class="btn btn-danger" ng-click="addMatchTermQuestion();">Add Match-Terms Question</button>
+
+  <br/>
+  <br/>
+  <div class="form-group">
+    <label for="questionSetName">Unique Question Set Name:</label>
+    <input type="questionSetName" class="form-control" id="questionSetName" name="questionSetName" ng-model="questionSetName" required>
+  </div>
+  <div class="form-group">
+    <label for="questionSetTags">Unique Question Set Tags: (separate multple tags with comma)</label>
+    <input type="questionSetTags" class="form-control" id="questionSetTags" name="questionSetTags" ng-model="questionSetTags">
+  </div>
+  <br>
+</form>
+
+<button type="button" class="btn btn-warning btn-md" ng-click="validate();">Upload</button>
+<!--<button type="button" class="btn btn-info" ng-click="upload();">Upload</button>-->
+<br/><br/>
+
+
+<br/>
+<br/>
+

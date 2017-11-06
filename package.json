@@ -1,0 +1,23 @@
+{
+  "name": "angryquiz",
+  "version": "1.0.0",
+  "description": "Static Site",
+  "local-web-server": {
+    "port": 8100,
+    "forbid": "*.json"
+  },
+  "scripts": {
+    "start": "ws",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Angry Quiz",
+  "license": "MIT",
+  "devDependencies": {
+    "local-web-server": "^1.1.0"
+  },
+  "repository": {
+   "type": "git",
+   "url": "https://github.com/angryquiz/angryquiz.git"
+  },
+  "dependencies": {}
+}

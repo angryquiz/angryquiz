@@ -1,0 +1,92 @@
+<div class="alert alert-danger" ng-show="apiError"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> {{ apiErrorMessage }}.</div>
+<div>
+<div>
+<div>
+<input class="btn btn-primary" type = "file" file-model = "myFile"/>
+<br/>
+<button class="btn btn-primary" ng-click = "uploadFile()">Upload</button>
+</div>
+<br/>
+<p>{{answerMessage}}<p> 
+
+<!--
+<div class="table-responsive">
+ <table class="table">
+    <thead>
+        <th>Questions</th>
+    </thead>
+    <tbody>
+        <tr quiz-tr-row ng-repeat="row in quizItems" scdata="d"></tr>
+    </tbody>
+</table>
+</div>
+-->
+<div class="panel-group" ng-repeat="row in quizItems">
+	
+	<div id="{{row.questionNumber}}_parent_panel" name="{{row.questionNumber}}_parent_panel" class="panel panel-primary">
+	      <div id="{{row.questionNumber}}_parent_heading" name="{{row.questionNumber}}_parent_heading" class="panel-heading">{{$index + 1}}. {{row.question}}</div>
+	      <div class="panel-body" ng-if="row.questionType=='single'">
+		 	
+
+			<!--
+		 	<div ng-repeat="(key, value) in row.selection">
+		 	<div class="radio">
+			  <label id="{{row.questionNumber}}_{{key}}_radio_label" name="{{row.questionNumber}}_{{key}}_radio_label"><input type="radio" name="{{row.questionNumber}}" id="{{row.questionNumber}}" value="{{key}}" ng-click="quizSubmitAnswerClick($event)">{{value}}</label>
+			</div>     	
+			</div>
+			-->
+
+		 	<div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+		 	<div class="radio">
+			  <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label" name="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label"><input type="radio" name="{{row.questionNumber}}" id="{{row.questionNumber}}" value="{{arrayOfSelection.key}}" ng-click="quizSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+			</div>     	
+			</div>
+
+	      </div>
+	      <div class="panel-body" ng-if="row.questionType=='multi'">
+		 	
+	        <!--
+		 	<div ng-repeat="(key, value) in row.selection">
+				<div class="checkbox">
+				  <label id="{{row.questionNumber}}_{{key}}_checkbox_label" name="{{row.questionNumber}}_{{key}}_checkbox_label"><input type="checkbox" name="{{row.questionNumber}}_{{key}}" id="{{row.questionNumber}}_{{key}}" value="{{key}}" ng-click="quizSubmitAnswerClick($event)">{{value}}</label>
+				</div>   	
+			</div>
+			-->
+		 	<div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+				<div class="checkbox">
+				  <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label" name="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label"><input type="checkbox" name="{{row.questionNumber}}_{{arrayOfSelection.key}}" id="{{row.questionNumber}}_{{arrayOfSelection.key}}" value="{{arrayOfSelection.key}}" ng-click="quizSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+				</div>   	
+			</div>			
+
+
+	      </div>   
+	      <div class="panel-body" ng-if="row.questionType=='match-term'">
+		 	    	
+			<div ng-repeat="arrayOfQuestionsMap in row.arrayOfQuestionsMap">
+
+				<div class="form-group">
+				  <label id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label" name="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label" for="{{arrayOfQuestionsMap.key}}">{{arrayOfQuestionsMap.value}}</label>
+					<!--				  
+				  <select class="form-control" id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}" ng-click="quizSubmitAnswerClick($event)">
+					-->
+
+				  <select class="form-control" id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}" onchange="quizSubmitAnswerClickStatic(event)">
+
+
+
+				    <option value=""> - Select - </option>
+				    <!-- <option ng-repeat="(anskey, ansvalue) in row.answersMap" value="{{anskey}}">{{ansvalue}}</option> -->
+				    <option ng-repeat="arrayOfAnswerMap in row.arrayOfAnswerMap" value="{{arrayOfAnswerMap.key}}">{{arrayOfAnswerMap.value}}</option> 
+				    
+				  </select>
+				</div>
+				  
+			</div>
+
+
+	      </div>              
+	</div>
+</div>
+<br/>
+<button type="button" class="btn btn-primary" ng-show="quizSubmitBtn" ng-click="quizSubmitBtnClick()">Show Results</button>
+<br/><br/>

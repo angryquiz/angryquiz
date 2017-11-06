@@ -1,0 +1,72 @@
+<div ng-show="quizMeSearchQuiz" class="ng-cloak">
+    <h2><b>{{QuizMeResults}}</b></h2><br>
+    <button type="button" class="btn btn-success" ng-click='quizMeSearchQuizClicked()'>Search another question set?
+    </button>
+</div>
+<h1>{{questionName}}</h1>
+<br/>
+<!-- Quiz Items -->
+<div ng-show="showQuizBankItems" class="ng-cloak">
+    <div class="panel-group" ng-repeat="row in quizMeItems">
+
+        <div id="{{row.questionNumber}}_parent_panel" name="{{row.questionNumber}}_parent_panel"
+             class="panel panel-primary">
+            <div id="{{row.questionNumber}}_parent_heading" name="{{row.questionNumber}}_parent_heading"
+                 class="panel-heading">{{$index + 1}}. {{row.question}}
+            </div>
+            <div class="panel-body" ng-if="row.questionType=='single'">
+                <div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+                    <div class="radio">
+                        <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label"
+                               name="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label"><input type="radio"
+                                                                                                         name="{{row.questionNumber}}"
+                                                                                                         id="{{row.questionNumber}}"
+                                                                                                         value="{{arrayOfSelection.key}}"
+                                                                                                         ng-click="quizMeSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" ng-if="row.questionType=='multi'">
+                <div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+                    <div class="checkbox">
+                        <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label"
+                               name="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label"><input
+                                type="checkbox" name="{{row.questionNumber}}_{{arrayOfSelection.key}}"
+                                id="{{row.questionNumber}}_{{arrayOfSelection.key}}" value="{{arrayOfSelection.key}}"
+                                ng-click="quizMeSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" ng-if="row.questionType=='match-term'">
+                <div ng-repeat="arrayOfQuestionsMap in row.arrayOfQuestionsMap track by $index">
+
+                    <div class="form-group">
+
+                        <label id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label"
+                               name="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label">{{arrayOfQuestionsMap.value}}</label>
+
+                        <select class="form-control"
+                                ng-options="arrayOfAnswerMap.value for arrayOfAnswerMap in row.arrayOfAnswerMap track by arrayOfAnswerMap.key "
+                                id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}"
+                                name="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_match_term"
+                                ng-change="quizMeSubmitAnswerMatchTermClick('{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_match_term')"
+                                ng-model="userselected">
+                            <option value=""> - Select -</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <button type="button" class="btn btn-primary" ng-show="quizMeSubmitBtn" ng-click="quizMeSubmitBtnClick()">Show
+        Results
+    </button>
+    <br/><br/>
+</div>
+
+
+
+
+

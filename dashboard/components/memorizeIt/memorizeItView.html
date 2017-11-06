@@ -1,0 +1,118 @@
+
+<h1>{{questionName}}</h1>
+<br/>
+<!-- Memorize questions -->
+<div ng-show="showMemorizeQuestionItems" class="ng-cloak">
+    <div ng-show="showStartOverMemorize" class="ng-cloak">
+        <button type="button" class="btn btn-success" ng-click='startOverMemorizeClicked()'>Search Another Question</button>
+    </div>
+
+    <div class="panel-group" ng-repeat="row in memorizeItems">
+
+        <div id="{{row.questionNumber}}_parent_panel" name="{{row.questionNumber}}_parent_panel" class="panel panel-primary">
+            <div id="{{row.questionNumber}}_parent_heading" name="{{row.questionNumber}}_parent_heading" class="panel-heading">{{row.question}}</div>
+            <div class="panel-body" ng-if="row.questionType=='single'">
+
+
+                <div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+                    <div class="radio">
+                        <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label" name="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label"><input type="radio" name="{{row.questionNumber}}" id="{{row.questionNumber}}" value="{{arrayOfSelection.key}}" ng-click="memorizeSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-body" ng-if="row.questionType=='multi'">
+
+                <div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+                    <div class="checkbox">
+                        <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label" name="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label"><input type="checkbox" name="{{row.questionNumber}}_{{arrayOfSelection.key}}" id="{{row.questionNumber}}_{{arrayOfSelection.key}}" value="{{arrayOfSelection.key}}" ng-click="memorizeSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="panel-body" ng-if="row.questionType=='match-term'">
+
+                <div ng-repeat="arrayOfQuestionsMap in row.arrayOfQuestionsMap">
+
+                    <div class="form-group">
+                        <label id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label" name="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label" for="{{arrayOfQuestionsMap.key}}">{{arrayOfQuestionsMap.value}}</label>
+
+
+                        <select class="form-control" id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}" onchange="memorizeItSubmitAnswerClickStatic(event, false)">
+
+                            <option value=""> - Select - </option>
+                            <option ng-repeat="arrayOfAnswerMap in row.arrayOfAnswerMap" value="{{arrayOfAnswerMap.key}}">{{arrayOfAnswerMap.value}}</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-group" ng-repeat="row in memorizeReadOnlyItems">
+
+        <div id="{{row.questionNumber}}_parent_panel" name="{{row.questionNumber}}_parent_panel" class="panel panel-primary">
+            <div id="{{row.questionNumber}}_parent_heading" name="{{row.questionNumber}}_parent_heading" class="panel-heading">{{row.question}}. Explanation:  {{row.explanation}}</div>
+            <div class="panel-body" ng-if="row.questionType=='single'">
+
+
+                <div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+                    <div class="radio">
+                        <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label" name="{{row.questionNumber}}_{{arrayOfSelection.key}}_radio_label"><input disabled type="radio" name="{{row.questionNumber}}" id="{{row.questionNumber}}" value="{{arrayOfSelection.key}}" ng-click="memorizeSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-body" ng-if="row.questionType=='multi'">
+
+                <div ng-repeat="arrayOfSelection in row.arrayOfSelection">
+                    <div class="checkbox">
+                        <label id="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label" name="{{row.questionNumber}}_{{arrayOfSelection.key}}_checkbox_label"><input disabled type="checkbox" name="{{row.questionNumber}}_{{arrayOfSelection.key}}" id="{{row.questionNumber}}_{{arrayOfSelection.key}}" value="{{arrayOfSelection.key}}" ng-click="memorizeSubmitAnswerClick($event)">{{arrayOfSelection.value}}</label>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="panel-body" ng-if="row.questionType=='match-term'">
+
+                <div ng-repeat="arrayOfQuestionsMap in row.arrayOfQuestionsMap">
+
+                    <div class="form-group">
+                        <label id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label" name="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}_select_one_label" for="{{arrayOfQuestionsMap.key}}">{{arrayOfQuestionsMap.value}}</label>
+
+
+                        <select disabled class="form-control" id="{{row.questionNumber}}_{{arrayOfQuestionsMap.key}}" ng-click="memorizeSubmitAnswerClick($event)">
+
+
+                            <option value=""> - Select - </option>
+                            <option ng-repeat="arrayOfAnswerMap in row.arrayOfAnswerMap" value="{{arrayOfAnswerMap.key}}">{{arrayOfAnswerMap.value}}</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <button type="button" class="btn btn-primary" id="memorizeCheckAnswerBtnSelectOne" onclick="memorizeItCheckAnswerBtnSelectOneClick()">Check Answer</button>
+    <button type="button" class="btn btn-primary" id="memorizeCheckAnswerBtn" ng-show="memorizeCheckAnswerBtn" ng-click="memorizeCheckAnswerBtnClick()">Check Answer</button>
+    <button type="button" class="btn btn-primary" id="memorizeNextQuetionBtn" ng-show="memorizeNextQuetionBtn" ng-click="memorizeNextQuetionBtnClick()">Next Question</button>
+    <button type="button" class="btn btn-primary" id="memorizeShowWrongAnswerBtn" ng-show="memorizeShowWrongAnswerBtn" ng-click="memorizeShowWrongAnswerBtnClick()">Show Wrong Answer</button>
+    <button type="button" class="btn btn-primary" id="memorizeShowCorrectAnswerBtn" ng-show="memorizeShowCorrectAnswerBtn" ng-click="memorizeShowCorrectAnswerBtnClick()">Show Correct Answer</button>
+    <br><br>
+    <b>{{answerMessage}}
+    <div id="answerSelectOne"></div></b>
+    <br/><br/><br/>
+</div>
+
+
+
+

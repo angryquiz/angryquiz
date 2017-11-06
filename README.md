@@ -1,2 +1,3 @@
-# angryquiz
-Front-end Application / AngularJS
+
+npm install
+npm start

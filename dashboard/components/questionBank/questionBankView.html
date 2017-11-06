@@ -1,0 +1,20 @@
+<div class="alert alert-danger" ng-show="apiError"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> {{ apiErrorMessage }}.</div>
+<div>
+<div>
+<div>
+<div class="form-group">
+<label for="questionName">Unique name of your question set (e.g. natural-science-101a, sunday77) </label>
+<input type="questionName" class="form-control" id="questionName" name="questionName" ng-model="questionName" ng-disabled="loading">
+</div>
+
+<div class="form-group">
+<label for="questionTag">Keywords to help you in searching (comma separated e.g. newton, einstein, armstrong)</label>
+<input type="questionTag" class="form-control" id="questionTag" name="questionTag" ng-model="questionTag" ng-disabled="loading">
+</div>
+
+<input class="btn btn-primary" type = "file" file-model = "myFile"/>
+<br/>
+<button class="btn btn-primary" ng-click = "uploadQuestionList()">Upload</button>
+<p ng-show="showUploadQuestionListMessage" class="ng-cloak"><br/>{{uploadQuestionListStatus}}</p>
+</div>
+<br/><br/>

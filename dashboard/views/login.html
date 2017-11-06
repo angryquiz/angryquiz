@@ -1,0 +1,43 @@
+
+<form role="form" ng-submit="submit()">
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" id="user" name="user" ng-model="user" ng-disabled="loading">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pass" name="pass" ng-model="pass" ng-disabled="loading" >
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Remember me</label>
+  </div>
+  <button type="submit" class="btn btn-default" ng-disabled="loading">Submit</button>
+</form>
+
+  <!--
+  <form ng-submit="submit()">
+  <div class="form-group">
+    <fieldset>
+      Email Address: <input type="text" name="user" ng-model="user" ng-disabled="loading" />
+      <br>
+      Password: <input type="password" name="pass" ng-model="pass" ng-disabled="loading" />
+      <br><br>
+      <button type="submit" ng-disabled="loading">submit</button>
+    </fieldset>
+    </div>
+  </form>
+ -->
+  <!--
+  <br/>
+  <a href="" ng-click="signin()">Signin</a> 
+  
+  <a href="" ng-click="reset()">Reset</a> 
+  -->
+  
+  <!-- <a href="" ng-click="doGoogleAuthWithPopup()">Login with Google</a><br/> -->
+  
+  <!--
+  <a href="" ng-click="doSignupPopup()">Signup</a><br/>
+  ->
+  
+</div>
